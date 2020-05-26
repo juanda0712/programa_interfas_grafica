@@ -103,16 +103,65 @@ def main():
 
      #Personal Information#
      #Photography#
-     photo = tk.PhotoImage(file = "photo2.png")
+     facePhoto = tk.PhotoImage(file = "photo2.png")   #photo
+
+     mapPhoto = tk.PhotoImage(file = "./images/mapa2.png") #map
      
      
 
 
      #Labels#
-     
-     photoLabel = tk.Label(information_canvas,image=photo)
+     photoLabel = tk.Label(information_canvas,image=facePhoto) #personal photo label
      photoLabel.pack()
      photoLabel.place(x=270,y=6)
+
+     mapLabel = tk.Label(information_canvas,image=mapPhoto) #map label
+     mapLabel.pack()
+     mapLabel.place(x=10,y=265)
+
+     nameLabel = tk.Label(information_canvas,text="Juan Daniel Rodríguez Montero",  #name
+     bg="#424242",font=("Comic Sans",12),fg="white")
+     nameLabel.pack()
+     nameLabel.place(x=10,y=80)
+
+     idLabel = tk.Label(information_canvas,text="2020426163",  #ID
+     bg="#424242",font=("Comic Sans",12),fg="white")
+     idLabel.pack()
+     idLabel.place(x=10,y=115)
+
+     genderLabel = tk.Label(information_canvas,text="Masculino",  #Gender
+     bg="#424242",font=("Comic Sans",12),fg="white")
+     genderLabel.pack()
+     genderLabel.place(x=10,y=155)
+
+     ageLabel = tk.Label(information_canvas,text="20 años",  #Age
+     bg="#424242",font=("Comic Sans",12),fg="white")
+     ageLabel.pack()
+     ageLabel.place(x=10,y=195)
+
+     addressLabel = tk.Label(information_canvas,text="Quebradilla, Cartago, Costa Rica",  #address
+     bg="#424242",font=("Comic Sans",12),fg="white")
+     addressLabel.pack()
+     addressLabel.place(x=10,y=235)
+
+     drescription1 = tk.Label(information_canvas,text="-Lugar muy tranquilo",  #drescription
+     bg="#424242",font=("Comic Sans",12),fg="white")
+     drescription1.pack()
+     drescription1.place(x=200,y=270)
+
+     drescription2 = tk.Label(information_canvas,text="-Tiene mucha naturaleza",  #drescription
+     bg="#424242",font=("Comic Sans",12),fg="white")
+     drescription2.pack()
+     drescription2.place(x=200,y=310)
+
+     drescription3 = tk.Label(information_canvas,text="-La gente es muy amable",  #drescription
+     bg="#424242",font=("Comic Sans",12),fg="white")
+     drescription3.pack()
+     drescription3.place(x=200,y=350)
+
+     
+
+
 
      
 
