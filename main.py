@@ -80,6 +80,7 @@ def fibonacci():
 #Animation#
 #Ball#
 class Balls:
+     
     def __init__(self, canvas):                #Constructor
         self.canvas = canvas
         self.x = random.randint(10, 300)
@@ -90,6 +91,7 @@ class Balls:
         self.top_y = 25
         self.oval = canvas.create_oval(self.x, self.y, self.x + 30, 30, fill="white",outline="red") 
 
+    
     def move(self):               
         while self.x < 600:
             if self.y >= 575 - self.r*2 and self.falling:       
