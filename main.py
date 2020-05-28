@@ -2,6 +2,9 @@
 import tkinter as tk
 from tkinter import messagebox
 from winsound import *
+from threading import Thread
+import time
+import random
 
 
 
@@ -72,6 +75,38 @@ def fibonacci():
                return 1
           else:
                return fib_aux(num-1)+ fib_aux(num-2)
+
+
+#Animation#
+class Balls:
+    def __init__(self, canvas):                #Constructor
+        self.canvas = canvas
+        self.x = random.randint(10, 300)
+        self.y = 0
+        self.r = 5
+        self.speed = 5
+        self.falling = True
+        self.top_y = self.y + 100
+        self.oval = canvas.create_oval(self.x, self.y, self.x + 2*self.r, self.y + 2*self.r, fill="white") #color | tamaño
+
+    def move(self):                                             # Move method of the BouncingBall class
+        while self.x < 600:
+            # Bouncing effect
+            if self.y >= 575 - self.r*2 and self.falling:       # When the ball touch the bottom
+                self.falling = False
+            
+
+            # Movement
+            if self.falling:                                    # Move up/down 
+                self.y += self.r
+                self.canvas.move(self.oval, 3, 8)
+            else:
+                self.y -= self.r
+                self.canvas.move(self.oval, 3, -8)
+                
+            self.x += self.speed                                # Move forward
+
+            time.sleep(0.05)
 
 
 #MAIN FUNCTION#
@@ -181,7 +216,18 @@ def main():
      bg="#424242",font=("Comic Sans",12),fg="white")
      musicalGenre.pack()
      musicalGenre.place(x=245,y=440)
-     
+
+
+
+     #animation function#
+     def create_circle():
+        circle = Balls(animation_canvas)
+        circle_thread = Thread(target=circle.move)
+        circle_thread.daemon = True
+        circle_thread.start()
+
+     button_animation = tk.Button(animation_canvas, text="Play", font=("fixedsys", "15"), bg="blue", command=create_circle)
+     button_animation.place(x=200,y=0)
 
      #Infinite loop#
      window.mainloop()
