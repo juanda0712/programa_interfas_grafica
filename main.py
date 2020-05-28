@@ -78,33 +78,59 @@ def fibonacci():
 
 
 #Animation#
+#Ball#
 class Balls:
     def __init__(self, canvas):                #Constructor
         self.canvas = canvas
         self.x = random.randint(10, 300)
         self.y = 0
         self.r = 5
-        self.speed = 5
+        self.speed = 4
         self.falling = True
-        self.top_y = self.y + 100
-        self.oval = canvas.create_oval(self.x, self.y, self.x + 2*self.r, self.y + 2*self.r, fill="white") #color | tamaño
+        self.top_y = 25
+        self.oval = canvas.create_oval(self.x, self.y, self.x + 30, 30, fill="white",outline="red") 
 
-    def move(self):                                             # Move method of the BouncingBall class
+    def move(self):               
         while self.x < 600:
-            # Bouncing effect
-            if self.y >= 575 - self.r*2 and self.falling:       # When the ball touch the bottom
+            if self.y >= 575 - self.r*2 and self.falling:       
                 self.falling = False
-            
 
-            # Movement
-            if self.falling:                                    # Move up/down 
+            if self.falling:                                   
                 self.y += self.r
                 self.canvas.move(self.oval, 3, 8)
             else:
                 self.y -= self.r
                 self.canvas.move(self.oval, 3, -8)
                 
-            self.x += self.speed                                # Move forward
+            self.x += self.speed                       
+
+            time.sleep(0.05)
+
+#Square#
+class Squares:
+    def __init__(self, canvas):                #Constructor
+        self.canvas = canvas
+        self.x = random.randint(0, 300)
+        self.y = 600
+        self.r = 5
+        self.speed = 3
+        self.falling = False
+        self.top_y = 25
+        self.oval = canvas.create_rectangle(self.x,self.y,self.x+35,self.y+35, fill="black",outline="white")
+
+    def move(self):                                             
+        while self.x < 600:
+            if self.y >= 575 - self.r*2 and self.falling:       
+                self.falling = False
+
+            if self.falling:                                   
+                self.y += self.r
+                self.canvas.move(self.oval, 3, 8)
+            else:
+                self.y -= self.r
+                self.canvas.move(self.oval, 3, -8)
+                
+            self.x += self.speed                              
 
             time.sleep(0.05)
 
@@ -226,8 +252,18 @@ def main():
         circle_thread.daemon = True
         circle_thread.start()
 
-     button_animation = tk.Button(animation_canvas, text="Play", font=("fixedsys", "15"), bg="blue", command=create_circle)
-     button_animation.place(x=200,y=0)
+     def create_squares():
+        square = Squares(animation_canvas)
+        square_thread = Thread(target=square.move)
+        square_thread.daemon = True
+        square_thread.start()
+
+     #animation buttons#
+     button_animation = tk.Button(animation_canvas, text="Circles", font=("Comic Sans",16), bg="#991010", command=create_circle,fg="white")
+     button_animation.place(x=10,y=10)
+
+     button_animation = tk.Button(animation_canvas, text="Squares", font=("Comic Sans",16), bg="#991010", command=create_squares,fg="white")
+     button_animation.place(x=10,y=530)
 
      #Infinite loop#
      window.mainloop()
