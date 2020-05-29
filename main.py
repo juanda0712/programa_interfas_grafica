@@ -1,10 +1,10 @@
 #LIBRARIES#
 import tkinter as tk
-from tkinter import messagebox
 from winsound import *
 from threading import Thread
 import time
 import random
+from timeit import default_timer
 
 
 
@@ -12,7 +12,7 @@ import random
 def fibonacci():
      #win settings
      secwin=tk.Toplevel()
-     secwin.geometry("275x300")
+     secwin.geometry("300x365")
      secwin.resizable(False,False)
      secwin.config(bg="#424242")
      
@@ -27,61 +27,121 @@ def fibonacci():
      label_entry.pack()
      label_entry.place(x=3,y=56)
 
-     tail_recursive= tk.Label(secwin,text="Recursividad de cola:",font=("Comic Sans",12),bg="#424242", #tail
+     tail_recursive= tk.Label(secwin,text="Cola:",font=("Comic Sans",12),bg="#424242", #tail
      fg="#B4B4B4")
      tail_recursive.pack()
-     tail_recursive.place(x=3,y=120)
+     tail_recursive.place(x=3,y=110)
 
-     pile_recursive= tk.Label(secwin,text="Recursividad de pila:",font=("Comic Sans",12),bg="#424242", #pile
+     pile_recursive= tk.Label(secwin,text="Pila:",font=("Comic Sans",12),bg="#424242", #pile
      fg="#B4B4B4")
      pile_recursive.pack()
-     pile_recursive.place(x=3,y=160)
+     pile_recursive.place(x=3,y=195)
 
-     time = tk.Label(secwin,text="Duración:",font=("Comic Sans",12),bg="#424242",fg="#B4B4B4")    #time
-     time.pack()
-     time.place(x=3,y=200)
+     timePile = tk.Label(secwin,text="Duración:",font=("Comic Sans",12),bg="#424242",fg="#B4B4B4")    #Pile time
+     timePile.pack()
+     timePile.place(x=3,y=220)
+
+     timeTail = tk.Label(secwin,text="Duración:",font=("Comic Sans",12),bg="#424242",fg="#B4B4B4")    #Tail time
+     timeTail.pack()
+     timeTail.place(x=3,y=135)
+
+     loopPile = tk.Label(secwin,text="Vueltas:",font=("Comic Sans",12),bg="#424242",fg="#B4B4B4")    #Pile loop
+     loopPile.pack()
+     loopPile.place(x=3,y=245)
+
+     loopTail = tk.Label(secwin,text="Vueltas:",font=("Comic Sans",12),bg="#424242",fg="#B4B4B4")    #Tail loop
+     loopTail.pack()
+     loopTail.place(x=3,y=161)
 
      #entry#
      entry = tk.Entry(secwin,bg="#696969",font=("Comic Sans",12),fg="white")
      entry.pack()
      entry.place(x=125,y=60)
 
-     finalResult=tk.StringVar()
-     result=tk.Entry(secwin,bg="#424242",font=("Comic Sans",12),fg="white",textvariable=finalResult,relief="flat")
-     result.pack()
-     result.place(x=125,y=90)
+     finalResultPile=tk.StringVar()  
+     pileResult=tk.Entry(secwin,bg="#424242",font=("Comic Sans",12),fg="white",textvariable=finalResultPile,relief="flat")   #Pile result
+     pileResult.pack()
+     pileResult.place(x=50,y=195)
+
+     finalResultTail=tk.StringVar()
+     tailResult=tk.Entry(secwin,bg="#424242",font=("Comic Sans",12),fg="white",textvariable=finalResultTail,relief="flat")  #Tail result
+     tailResult.pack()
+     tailResult.place(x=50,y=110)
+
+     resultTimePile=tk.StringVar()
+     pileTime=tk.Entry(secwin,bg="#424242",font=("Comic Sans",12),fg="white",textvariable=resultTimePile,relief="flat")  #Pile time
+     pileTime.pack()
+     pileTime.place(x=75,y=220)
+
+     resultTimeTail=tk.StringVar()
+     tailTime=tk.Entry(secwin,bg="#424242",font=("Comic Sans",12),fg="white",textvariable=resultTimeTail,relief="flat")  #Tail time
+     tailTime.pack()
+     tailTime.place(x=75,y=135)
+
+     resultLootPile=tk.StringVar()
+     lootPile=tk.Entry(secwin,bg="#424242",font=("Comic Sans",12),fg="white",textvariable=resultLootPile,relief="flat")  #Pile loots
+     lootPile.pack()
+     lootPile.place(x=65,y=245)
+
+     resultLootTail=tk.StringVar()
+     tailResult=tk.Entry(secwin,bg="#424242",font=("Comic Sans",12),fg="white",textvariable=resultLootTail,relief="flat")  #Tail Loots
+     tailResult.pack()
+     tailResult.place(x=65,y=161)
 
      #buttons#
      cancelButton = tk.Button(secwin,text="Cancelar",bg="#696969",fg="#D1CFCF",font=("Comic Sans",11),
      cursor="hand2",activebackground="#696969",activeforeground="white",command=secwin.destroy)
      cancelButton.pack()
-     cancelButton.place(x=195,y=265)
+     cancelButton.place(x=210,y=320)
      
      acceptButton= tk.Button(secwin,text="Aceptar",bg="#696969",fg="#D1CFCF",font=("Comic Sans",11),
      cursor="hand2",activebackground="#696969",activeforeground="white",command=lambda:fib(int(entry.get())))
      acceptButton.pack()
-     acceptButton.place(x=120,y=265)
+     acceptButton.place(x=135,y=320)
      
      #pile recursive funtion#
      def fib(num):
+          start = default_timer()
+          fib2(num)
           if isinstance(num,int) and num >0:
-               finalResult.set(fib_aux(num))
+               finalResultPile.set(fib_aux(num,0,start))
           else:
-               finalResult.set("Numero invalido")
-     def fib_aux(num):
+               finalResultPile.set("Numero invalido")
+     def fib_aux(num,veces,start):
           if num == 0:
+               end = default_timer()
+               resultTimePile.set(end-start)
+               resultLootPile.set(veces)
                return 0
           elif num ==1:
                return 1
           else:
-               return fib_aux(num-1)+ fib_aux(num-2)
+               veces = veces + 1
+               return fib_aux(num-1,veces,start)+ fib_aux(num-2,veces,start)
 
+     #Tail resursive function#
+     def fib2(num):
+          start = default_timer()
+          if isinstance(num,int) and num > 0:
+               return finalResultTail.set(fib2_aux(num,0,1,0,0,start))
+          else:
+               return -1    
+     def fib2_aux(num,count,n1,n2,veces,start):
+          if count == num:
+               end = default_timer()
+               resultTimeTail.set(end - start)
+               resultLootTail.set(veces)
+               return n2
+          else:
+               veces = veces+1
+               return fib2_aux(num,count+1,n2,n1+n2,veces,start)
 
+         
 #Animation#
 #Ball#
 class Balls:
      
-    def __init__(self, canvas):                #Constructor
+    def __init__(self, canvas):                #Constructor __init__
         self.canvas = canvas
         self.x = random.randint(10, 300)
         self.y = 0
@@ -110,7 +170,7 @@ class Balls:
 
 #Square#
 class Squares:
-    def __init__(self, canvas):                #Constructor
+    def __init__(self, canvas):                #Constructor __init__
         self.canvas = canvas
         self.x = random.randint(0, 300)
         self.y = 600
