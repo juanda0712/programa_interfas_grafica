@@ -54,7 +54,7 @@ def fibonacci():
      loopTail.place(x=3,y=161)
 
      #entry#
-     entry = tk.Entry(secwin,bg="#696969",font=("Comic Sans",12),fg="white")
+     entry = tk.Entry(secwin,bg="#696969",font=("Comic Sans",12),fg="white")   #Entry number
      entry.pack()
      entry.place(x=125,y=60)
 
@@ -79,36 +79,36 @@ def fibonacci():
      tailTime.place(x=75,y=135)
 
      resultLootPile=tk.StringVar()
-     lootPile=tk.Entry(secwin,bg="#424242",font=("Comic Sans",12),fg="white",textvariable=resultLootPile,relief="flat")  #Pile loots
+     lootPile=tk.Entry(secwin,bg="#424242",font=("Comic Sans",12),fg="white",textvariable=resultLootPile,relief="flat")  #Pile recursions
      lootPile.pack()
      lootPile.place(x=65,y=245)
 
      resultLootTail=tk.StringVar()
-     tailResult=tk.Entry(secwin,bg="#424242",font=("Comic Sans",12),fg="white",textvariable=resultLootTail,relief="flat")  #Tail Loots
+     tailResult=tk.Entry(secwin,bg="#424242",font=("Comic Sans",12),fg="white",textvariable=resultLootTail,relief="flat")  #Tail recursions
      tailResult.pack()
      tailResult.place(x=65,y=161)
 
      #buttons#
-     cancelButton = tk.Button(secwin,text="Cancelar",bg="#696969",fg="#D1CFCF",font=("Comic Sans",11),
+     cancelButton = tk.Button(secwin,text="Cancelar",bg="#696969",fg="#D1CFCF",font=("Comic Sans",11),   #cancel button
      cursor="hand2",activebackground="#696969",activeforeground="white",command=secwin.destroy)
      cancelButton.pack()
      cancelButton.place(x=210,y=320)
      
-     acceptButton= tk.Button(secwin,text="Aceptar",bg="#696969",fg="#D1CFCF",font=("Comic Sans",11),
+     acceptButton= tk.Button(secwin,text="Aceptar",bg="#696969",fg="#D1CFCF",font=("Comic Sans",11),    #Accept button
      cursor="hand2",activebackground="#696969",activeforeground="white",command=lambda:fib(int(entry.get())))
      acceptButton.pack()
      acceptButton.place(x=135,y=320)
      
-     #pile recursive funtion#
-     def fib(num):
+     #pile recursive funtion | timer | number of recursions 
+     def fib(num): #principal function
           start = default_timer()
           fib2(num)
           if isinstance(num,int) and num >0:
                finalResultPile.set(fib_aux(num,0,start))
           else:
                finalResultPile.set("Numero invalido")
-     def fib_aux(num,veces,start):
-          if num == 0:
+     def fib_aux(num,veces,start): #Auxiliary function
+          if num == 0:  #base case
                end = default_timer()
                resultTimePile.set(end-start)
                resultLootPile.set(veces)
@@ -119,15 +119,15 @@ def fibonacci():
                veces = veces + 1
                return fib_aux(num-1,veces,start)+ fib_aux(num-2,veces,start)
 
-     #Tail resursive function#
-     def fib2(num):
+     #Tail resursive function | timer | number of recursions 
+     def fib2(num): #principal function
           start = default_timer()
           if isinstance(num,int) and num > 0:
                return finalResultTail.set(fib2_aux(num,0,1,0,0,start))
           else:
                return -1    
      def fib2_aux(num,count,n1,n2,veces,start):
-          if count == num:
+          if count == num: #base case
                end = default_timer()
                resultTimeTail.set(end - start)
                resultLootTail.set(veces)
@@ -149,9 +149,9 @@ class Balls:
         self.speed = 4
         self.falling = True
         self.top_y = 25
-        self.oval = canvas.create_oval(self.x, self.y, self.x + 30, 30, fill="white",outline="red") 
+        self.oval = canvas.create_oval(self.x, self.y, self.x + 30, 30, fill="white",outline="red")  #create oval
 
-    
+    #move funcion#
     def move(self):               
         while self.x < 600:
             if self.y >= 575 - self.r*2 and self.falling:       
@@ -178,8 +178,9 @@ class Squares:
         self.speed = 3
         self.falling = False
         self.top_y = 25
-        self.oval = canvas.create_rectangle(self.x,self.y,self.x+35,self.y+35, fill="black",outline="white")
-
+        self.oval = canvas.create_rectangle(self.x,self.y,self.x+35,self.y+35, fill="black",outline="white") #create square
+        
+    #move function
     def move(self):                                             
         while self.x < 600:
             if self.y >= 575 - self.r*2 and self.falling:       
@@ -321,10 +322,10 @@ def main():
         square_thread.start()
 
      #animation buttons#
-     button_animation = tk.Button(animation_canvas, text="Circles", font=("Comic Sans",16), bg="#991010", command=create_circle,fg="white")
+     button_animation = tk.Button(animation_canvas,cursor="hand2", text="Circles", font=("Comic Sans",16), bg="#991010", command=create_circle,fg="white")
      button_animation.place(x=10,y=10)
 
-     button_animation = tk.Button(animation_canvas, text="Squares", font=("Comic Sans",16), bg="#991010", command=create_squares,fg="white")
+     button_animation = tk.Button(animation_canvas,cursor="hand2", text="Squares", font=("Comic Sans",16), bg="#991010", command=create_squares,fg="white")
      button_animation.place(x=10,y=530)
 
      #Infinite loop#
